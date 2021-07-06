@@ -12,7 +12,7 @@
         <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="LoginViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginViewController" id="BYZ-38-t0r" customClass="LoginViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -76,7 +76,7 @@
         <!--Feed View Controller-->
         <scene sceneID="Rv6-Vw-HCz">
             <objects>
-                <viewController id="DVb-S9-bP0" customClass="FeedViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FeedViewController" id="DVb-S9-bP0" customClass="FeedViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2ku-kL-dNa">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -84,7 +84,11 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="DYI-hN-O17">
-                        <barButtonItem key="leftBarButtonItem" title="Logout" id="s1B-6b-6sn"/>
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="s1B-6b-6sn">
+                            <connections>
+                                <action selector="logoutNow:" destination="DVb-S9-bP0" id="N4Q-69-T2J"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="N6L-Db-hHq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -94,7 +98,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="zkc-aP-zzP">
             <objects>
-                <tabBarController id="VlW-ER-447" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabController" id="VlW-ER-447" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="aqz-H3-Uap">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -111,7 +115,7 @@
         <!--Item-->
         <scene sceneID="Dpv-Js-Kte">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="6jd-6M-QLh" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="NavTimeline" automaticallyAdjustsScrollViewInsets="NO" id="6jd-6M-QLh" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="bCP-Mf-SrX"/>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="XAs-fb-llc"/>

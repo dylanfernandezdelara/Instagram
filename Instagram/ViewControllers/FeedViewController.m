@@ -15,6 +15,7 @@
 @interface FeedViewController ()<UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSArray *arrayOfPosts;
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
 
 @end
 
@@ -24,7 +25,15 @@
     [super viewDidLoad];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    [self fetchTimeline];
     
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(fetchTimeline) forControlEvents:UIControlEventValueChanged];
+    [self.tableView insertSubview:self.refreshControl atIndex:0];
+    
+}
+
+- (void)fetchTimeline {
     // construct PFQuery
     PFQuery *postQuery = [Post query];
     [postQuery orderByDescending:@"createdAt"];
@@ -36,8 +45,9 @@
         if (posts) {
             // do something with the data fetched
             self.arrayOfPosts = posts;
+            [self.refreshControl endRefreshing];
             [self.tableView reloadData];
-            //NSLog(@"%@", posts);
+            NSLog(@"Fetched data!");
         }
         else {
             // handle error

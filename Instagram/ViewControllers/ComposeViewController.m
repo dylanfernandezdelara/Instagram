@@ -60,7 +60,7 @@
     UIImage *editedImage = info[UIImagePickerControllerEditedImage];
 
     // Resize
-    CGSize temp_size = CGSizeMake(120, 120);
+    CGSize temp_size = CGSizeMake(600, 400);
     UIImage *temp = [self resizeImage:editedImage withSize:temp_size];
     [self.composedPhoto setImage:temp forState:UIControlStateNormal];
     

@@ -7,6 +7,7 @@
 
 #import "LoginViewController.h"
 #import "FeedViewController.h"
+#import "DetailsViewController.h"
 #import "Parse/Parse.h"
 #import "SceneDelegate.h"
 #import "PostCell.h"
@@ -66,16 +67,6 @@
     }];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     PostCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PostCell"];
     Post *curr_post = self.arrayOfPosts[indexPath.row];
@@ -86,6 +77,22 @@
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // NSLog(@"%lu", self.arrayOfPosts.count);
     return self.arrayOfPosts.count;
+}
+
+
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    if([segue.identifier isEqualToString:@"detailsSegue"]){
+        UITableViewCell *tappedCell = sender;
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:tappedCell];
+        Post *post_pressed = self.arrayOfPosts[indexPath.row];
+        DetailsViewController *DetailsView = [segue destinationViewController];
+        DetailsView.post = post_pressed;
+    }
+    
 }
 
 @end

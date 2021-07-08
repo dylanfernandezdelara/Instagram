@@ -21,9 +21,14 @@
 }
 
 - (void)setPost:(Post *)post {
-    //_post = post;
-    //self.photoImageView.file = post[@"image"];
-    //[self.photoImageView loadInBackground];
+    _post = post;
+    self.contentCaption.text = post.caption;
+    PFFileObject *temp_file = post.image;
+    [temp_file getDataInBackgroundWithBlock:^(NSData *imageData, NSError *error) {
+            UIImage *thumbnailImage = [UIImage imageWithData:imageData];
+            UIImageView *thumbnailImageView = [[UIImageView alloc] initWithImage:thumbnailImage];
+            self.photoImageView.image = thumbnailImageView.image;
+        }];
 }
 
 @end

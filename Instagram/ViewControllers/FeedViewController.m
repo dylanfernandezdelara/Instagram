@@ -69,15 +69,12 @@
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     PostCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PostCell"];
     Post *curr_post = self.arrayOfPosts[indexPath.row];
-    // cell.contentPhoto = curr_post.image;
-    NSLog(@"%@", curr_post.caption);
-    cell.contentCaption.text = curr_post.caption;
-    cell.post = curr_post;
+    [cell setPost:curr_post];
     return cell;
 }
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSLog(@"%lu", self.arrayOfPosts.count);
+    // NSLog(@"%lu", self.arrayOfPosts.count);
     return self.arrayOfPosts.count;
 }
 

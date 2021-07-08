@@ -9,8 +9,12 @@
 #import "FeedViewController.h"
 #import "Parse/Parse.h"
 #import "SceneDelegate.h"
+#import "PostCell.h"
+#import "Post.h"
 
-@interface FeedViewController ()
+@interface FeedViewController ()<UITableViewDataSource, UITableViewDelegate>
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) NSArray *arrayOfPosts;
 
 @end
 
@@ -18,8 +22,30 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    
+    // construct PFQuery
+    PFQuery *postQuery = [Post query];
+    [postQuery orderByDescending:@"createdAt"];
+    [postQuery includeKey:@"author"];
+    postQuery.limit = 20;
+
+    // fetch data asynchronously
+    [postQuery findObjectsInBackgroundWithBlock:^(NSArray<Post *> * _Nullable posts, NSError * _Nullable error) {
+        if (posts) {
+            // do something with the data fetched
+            self.arrayOfPosts = posts;
+            [self.tableView reloadData];
+            //NSLog(@"%@", posts);
+        }
+        else {
+            // handle error
+            NSLog(@"Cannot fetch data");
+        }
+    }];
 }
+
 - (IBAction)logoutNow:(UIBarButtonItem *)sender {
     SceneDelegate *myDelegate = (SceneDelegate *)self.view.window.windowScene.delegate;
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -28,7 +54,6 @@
     [PFUser logOutInBackgroundWithBlock:^(NSError * _Nullable error) {
         NSLog(@"User logged out successfully");
     }];
-    
 }
 
 /*
@@ -40,5 +65,20 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+- (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    PostCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PostCell"];
+    Post *curr_post = self.arrayOfPosts[indexPath.row];
+    // cell.contentPhoto = curr_post.image;
+    NSLog(@"%@", curr_post.caption);
+    cell.contentCaption.text = curr_post.caption;
+    cell.post = curr_post;
+    return cell;
+}
+
+- (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    NSLog(@"%lu", self.arrayOfPosts.count);
+    return self.arrayOfPosts.count;
+}
 
 @end

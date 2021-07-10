@@ -23,6 +23,8 @@
 - (void)setPost:(Post *)post {
     _post = post;
     self.contentCaption.text = post.caption;
+    self.usernameLabel.text = [@"@" stringByAppendingString:self.post.author.username];
+    self.dateLabel.text = [NSDateFormatter localizedStringFromDate:self.post.createdAt dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterFullStyle];
     PFFileObject *temp_file = post.image;
     [temp_file getDataInBackgroundWithBlock:^(NSData *imageData, NSError *error) {
             UIImage *thumbnailImage = [UIImage imageWithData:imageData];
